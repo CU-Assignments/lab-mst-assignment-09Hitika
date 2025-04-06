@@ -1,0 +1,52 @@
+public class AlphabetAppender {
+
+    public String appendAlphabets(String input) {
+        StringBuilder output = new StringBuilder();
+
+        // Convert to lowercase as per requirement
+        input = input.toLowerCase();
+
+        int length = input.length();
+        if (length == 1) {
+            return input; // Rule (iii)
+        }
+
+        for (int i = 0; i < length; i++) {
+            char current = input.charAt(i);
+            output.append(current);
+
+            // Skip processing if current or next character is not alphabet
+            if (i < length - 1) {
+                char next = input.charAt(i + 1);
+
+                if (Character.isLetter(current) && Character.isLetter(next)) {
+                    int val1 = current - 'a' + 1;
+                    int val2 = next - 'a' + 1;
+                    int sum = val1 + val2;
+                    int mod = sum % 26;
+
+                    if (mod == 0) {
+                        output.append('0');
+                    } else {
+                        // Append corresponding alphabet (1 -> a, ..., 26 -> z)
+                        output.append((char) ('a' + mod - 1));
+                    }
+                }
+            }
+        }
+
+        return output.toString();
+    }
+
+    // Test the function
+    public static void main(String[] args) {
+        AlphabetAppender appender = new AlphabetAppender();
+
+        System.out.println(appender.appendAlphabets("ay"));     
+        System.out.println(appender.appendAlphabets("ac"));     
+        System.out.println(appender.appendAlphabets("12"));     
+        System.out.println(appender.appendAlphabets("1a"));     
+        System.out.println(appender.appendAlphabets("ac 12a")); 
+        System.out.println(appender.appendAlphabets("HELLO"));  
+    }
+}
