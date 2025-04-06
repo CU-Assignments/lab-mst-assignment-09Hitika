@@ -1,0 +1,42 @@
+public class MatchFinder {
+
+    public String matchFound(String input1, String input2) {
+        String[] words = input2.split(":");
+        StringBuilder output1 = new StringBuilder();
+
+        for (String word : words) {
+            if (word.length() != input1.length()) continue;
+
+            int mismatchCount = 0;
+            boolean match = true;
+
+            for (int i = 0; i < word.length(); i++) {
+                char c1 = input1.charAt(i);
+                char c2 = word.charAt(i);
+
+                if (c1 == '_') {
+                    mismatchCount++;
+                } else if (c1 != c2) {
+                    match = false;
+                    break;
+                }
+            }
+
+            if (match && mismatchCount == 1) {
+                if (output1.length() > 0) output1.append(":");
+                output1.append(word.toUpperCase());
+            }
+        }
+
+        return output1.toString();
+    }
+
+    // Example main method to test it
+    public static void main(String[] args) {
+        MatchFinder finder = new MatchFinder();
+        String input1 = "h_t";
+        String input2 = "hot:hat:hit:hut:heat:hoot";
+        String result = finder.matchFound(input1, input2);
+        System.out.println("Matched words: " + result);  // Output: HOT:HAT:HIT:HUT
+    }
+}
