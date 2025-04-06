@@ -1,0 +1,36 @@
+import java.util.*;
+
+public class BalancedParentheses {
+    
+    public static boolean isBalanced(String str) {
+        Stack<Character> stack = new Stack<>();
+        for (char ch : str.toCharArray()) {
+            switch (ch) {
+                case '(': case '{': case '[':
+                    stack.push(ch);
+                    break;
+                case ')':
+                    if (stack.isEmpty() || stack.pop() != '(') return false;
+                    break;
+                case '}':
+                    if (stack.isEmpty() || stack.pop() != '{') return false;
+                    break;
+                case ']':
+                    if (stack.isEmpty() || stack.pop() != '[') return false;
+                    break;
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        while (sc.hasNextLine()) {
+            String input = sc.nextLine().trim();
+            if (!input.isEmpty()) {
+                System.out.println(isBalanced(input));
+            }
+        }
+        sc.close();
+    }
+}
